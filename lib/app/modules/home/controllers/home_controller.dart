@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
+
+import 'package:ongkir/app/modules/home/courier_model.dart';
 
 class HomeController extends GetxController {
   var hiddenCityOrigin = true.obs;
@@ -18,6 +23,52 @@ class HomeController extends GetxController {
   String unitWeight = "gram";
 
   late TextEditingController weightC;
+
+  void ongkosKirim() async {
+    Uri url = Uri.parse("https://api.rajaongkir.com/starter/cost");
+
+    try {
+      final response = await http.post(
+        url,
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+          "key": "1b34ed35dc3f4a13eacb28fced5c8ef5",
+        },
+        body: {
+          "origin": "$cityOriginId",
+          "destination": "$cityDestinationId",
+          "weight": "$weight",
+          "courier": "$courier",
+        },
+      );
+      var data = json.decode(response.body) as Map<String, dynamic>;
+      var results = data["rajaongkir"]["results"] as List<dynamic>;
+
+      var listAllCost = Courier.fromJsonList(results);
+      var courierData = listAllCost[0];
+
+      Get.defaultDialog(
+          title: courierData.name as String,
+          content: Column(
+            children: courierData.costs!
+                .map(
+                  (e) => ListTile(
+                    title: Text("${e.description} (${e.service})"),
+                    subtitle: Text("Rp. ${e.cost![0].value}"),
+                    trailing: Text(courierData.code == "pos"
+                        ? "${e.cost![0].etd}"
+                        : "${e.cost![0].etd} Hari"),
+                  ),
+                )
+                .toList(),
+          ));
+    } catch (error) {
+      Get.defaultDialog(
+        title: "Terjadi Kesalahan!",
+        middleText: error.toString(),
+      );
+    }
+  }
 
   void showButton() {
     if (cityOriginId != 0 &&

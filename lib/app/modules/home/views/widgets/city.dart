@@ -69,8 +69,8 @@ class CityWidget extends GetView<HomeController> {
               controller.cityDestinationId.value =
                   int.parse(city.cityId as String);
             }
-            controller.showButton();
           }
+          controller.showButton();
         },
         showSearchBox: true,
         searchBoxDecoration: InputDecoration(

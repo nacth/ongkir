@@ -68,8 +68,8 @@ class ProvinceWidget extends GetView<HomeController> {
               controller.provDestinationId.value =
                   int.parse(province.provinceId as String);
             }
-            controller.showButton();
           }
+          controller.showButton();
         },
         showSearchBox: true,
         searchBoxDecoration: InputDecoration(
