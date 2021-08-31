@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:ongkir/app/modules/home/courier_model.dart';
+import '../courier_model.dart';
 
 class HomeController extends GetxController {
   var hiddenCityOrigin = true.obs;
