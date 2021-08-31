@@ -10,10 +10,25 @@ class HomeController extends GetxController {
   var provDestinationId = 0.obs;
   var cityDestinationId = 0.obs;
 
+  var hiddenButton = true.obs;
+
+  var courier = "".obs;
+
   double weight = 0.0;
   String unitWeight = "gram";
 
   late TextEditingController weightC;
+
+  void showButton() {
+    if (cityOriginId != 0 &&
+        cityDestinationId != 0 &&
+        weight > 0 &&
+        courier != "") {
+      hiddenButton.value = false;
+    } else {
+      hiddenButton.value = true;
+    }
+  }
 
   void convertWeight(String? value) {
     weight = double.tryParse(value!) ?? 0.0;
@@ -51,6 +66,7 @@ class HomeController extends GetxController {
     }
 
     print("$weight gram");
+    showButton();
   }
 
   void convertUnit(String? value) {
@@ -89,6 +105,7 @@ class HomeController extends GetxController {
 
     unitWeight = value!;
     print("$weight gram");
+    showButton();
   }
 
   @override

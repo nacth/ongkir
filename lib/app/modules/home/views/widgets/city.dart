@@ -57,8 +57,10 @@ class CityWidget extends GetView<HomeController> {
           if (city == null) {
             if (type == "origin") {
               print("Tidak memilih Kota / Kabupaten Asal");
+              controller.cityOriginId.value = 0;
             } else {
               print("Tidak memilih Kota / Kabupaten Tujuan");
+              controller.cityDestinationId.value = 0;
             }
           } else {
             if (type == "origin") {
@@ -67,6 +69,7 @@ class CityWidget extends GetView<HomeController> {
               controller.cityDestinationId.value =
                   int.parse(city.cityId as String);
             }
+            controller.showButton();
           }
         },
         showSearchBox: true,
