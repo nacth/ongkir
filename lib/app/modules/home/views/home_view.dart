@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../views/widgets/province.dart';
 import '../views/widgets/city.dart';
+import '../views/widgets/weight.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -34,6 +35,7 @@ class HomeView extends GetView<HomeController> {
                     type: "destination",
                   ),
           ),
+          WeightWidget(),
         ],
       ),
     );
